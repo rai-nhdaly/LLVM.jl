@@ -53,7 +53,7 @@ Convert a Julia type `typ` to its LLVM representation. Fails if the type would b
 """
 function Base.convert(::Type{LLVMType}, typ::Type)
     isboxed_ref = Ref{Bool}()
-    llvmtyp = LLVMType(ccall(:julia_type_to_llvm, LLVM.API.LLVMTypeRef,
+    llvmtyp = LLVMType(ccall(:jl_type_to_llvm, LLVM.API.LLVMTypeRef,
                              (Any, Ptr{Bool}), typ, isboxed_ref))
     @assert !isboxed_ref[]
     return llvmtyp
